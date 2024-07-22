@@ -1,0 +1,11 @@
+INSERT INTO hierarchy (Name, Type, ParentId, DeptId) VALUES ('Цех 1', 'Object', NULL, 1);
+INSERT INTO hierarchy (Name, Type, ParentId, DeptId) VALUES ('Насосная станция', 'TechPosition', 1, 1);
+INSERT INTO hierarchy (Name, Type, ParentId, DeptId) VALUES ('Насос 1', 'Equipment', 2, 1);
+INSERT INTO hierarchy (Name, Type, ParentId, DeptId) VALUES ('Подшипник', 'Node', 3, 1);
+INSERT INTO hierarchy (Name, Type, ParentId, DeptId) VALUES ('Вибрация', 'Control', 4, 1), ('Температура', 'Control', 4, 1);
+INSERT INTO hierarchy (Name, Type, ParentId, DeptId) VALUES ('Цех 2', 'Object', NULL, 2);
+INSERT INTO hierarchy (Name, Type, ParentId, DeptId) VALUES ('Станция по питью воды из кулеров', 'TechPosition', 7, 2);
+INSERT INTO hierarchy (Name, Type, ParentId, DeptId) VALUES ('Кулер 1', 'Equipment', 8, 2);
+INSERT INTO hierarchy (Name, Type, ParentId, DeptId) VALUES ('Краник 1', 'Node', 9, 2);
+INSERT INTO hierarchy (Name, Type, ParentId, DeptId) VALUES ('Краник 2', 'Node', 9, 2);
+INSERT INTO hierarchy (Name, Type, ParentId, DeptId) VALUES ('Вибрация', 'Control', 10, 2), ('Температура', 'Control', 10, 2);

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Mobicond_WebAPI.Helpers;
 using Mobicond_WebAPI.Helpers.Jwt;
 using Mobicond_WebAPI.Repositories.Implementations;
@@ -38,13 +39,40 @@ services.AddSingleton<DBContext>();
 services.AddScoped<IUserRepository, UserRepository>();
 services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-services.AddScoped<IPositionRepository, PositionRepository>();
+services.AddScoped<IJobTitleRepository, JobTitleRepository>();
 services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 services.AddScoped<IHierarchyRepository, HierarchyRepository>();
+services.AddScoped<IRouteRepository, RouteRepository>();
 
 services.AddControllers();
 
-services.AddSwaggerGen();
+services.AddSwaggerGen(opt =>
+{
+    opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MyAPI", Version = "v1" });
+    opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "bearer"
+    });
+    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
 
 var app = builder.Build();
 
@@ -66,8 +94,6 @@ if (app.Environment.IsDevelopment())
         }
     });
 }
-
-app.UseMiddleware<JwtSecureMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

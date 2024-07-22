@@ -2,10 +2,10 @@
 {
     public enum HierarchyType
     {
-        Object,
-        Techposition,
-        Equipment,
-        Node,
-        Control
+        Object = 1,
+        Techposition = 2,
+        Equipment = 3,
+        Node = 4,
+        Control = 5
     }
 }

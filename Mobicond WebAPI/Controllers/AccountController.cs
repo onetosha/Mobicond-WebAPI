@@ -7,7 +7,9 @@ using Mobicond_WebAPI.Repositories.Interfaces;
 
 namespace Mobicond_WebAPI.Controllers
 {
-    [Route("[controller]")]
+    //TODO: Routing
+    [Route("/api/v1/[controller]")]
+    [ApiController]
     public class AccountController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -19,7 +21,7 @@ namespace Mobicond_WebAPI.Controllers
             _jwtSettings = options.Value;
         }
         [AllowAnonymous]
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             try
@@ -31,14 +33,9 @@ namespace Mobicond_WebAPI.Controllers
                 {
                     return Unauthorized();
                 }
-                //Генерируем токен и кладем его в куки TODO: JWTSettings
+                //Генерируем токен 
                 var token = JwtTokenExtension.GenerateJWTToken(existingUser, _jwtSettings);
-                HttpContext.Response.Cookies.Append(".Application.DeveloperCode", token,
-                new CookieOptions
-                {
-                    MaxAge = TimeSpan.FromMinutes(60)
-                });
-                return Ok();
+                return Ok(token);
             }
             catch (Exception ex)
             {
@@ -46,7 +43,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
         [AllowAnonymous]
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] LoginModel model)
         {
             try
@@ -65,11 +62,10 @@ namespace Mobicond_WebAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [AllowAnonymous]
-        [HttpGet("Logout")]
-        public IActionResult Settings()
+        //TODO: Придумать logout (пока предложил бы просто удалять токен у клиента...)
+        [HttpGet("logout")]
+        public IActionResult Logout()
         {
-            HttpContext.Response.Cookies.Delete(".Application.DeveloperCode");
             return Ok();
         }
     }

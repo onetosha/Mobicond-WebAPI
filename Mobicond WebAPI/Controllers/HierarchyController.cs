@@ -5,7 +5,8 @@ using Mobicond_WebAPI.Repositories.Interfaces;
 
 namespace Mobicond_WebAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("/api/v1/[controller]")]
+    [ApiController]
     public class HierarchyController : Controller
     {
         private readonly IHierarchyRepository _hierarchyRepository;
@@ -13,13 +14,12 @@ namespace Mobicond_WebAPI.Controllers
         {
             _hierarchyRepository = hierarchyRepository;
         }
-
-        [HttpGet("GetHierarchy")]
-        public async Task<IActionResult> GetHierarchy(int deptId)
+        [HttpGet("get-dept-hierarchy")]
+        public async Task<IActionResult> GetHierarchyForDept(int deptId)
         {
             try
             {
-                var hierarchy = await _hierarchyRepository.GetHierarchy(deptId);
+                var hierarchy = await _hierarchyRepository.GetHierarchyForDept(deptId);
                 return Ok(hierarchy);
             }
             catch (Exception ex)
@@ -28,11 +28,31 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpPost("AddNode")]
+        [HttpGet("get-parent-hierarchy")]
+        public async Task<IActionResult> GetParentHierarchy(int nodeId)
+        {
+            try
+            {
+                var hierarchy = await _hierarchyRepository.GetParentHierarchy(nodeId);
+                return Ok(hierarchy);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("add-node")]
         public async Task<IActionResult> AddNodeToHierarchy([FromBody] HierarchyNode node)
         {
             try
             {
+                //Если DeptId в запросе не указан и элемент не корневой в иерархии, даем DeptId родителя
+                if (node.ParentId != null && (node.DeptId == 0 || node.DeptId == null))
+                {
+                    var deptId = await _hierarchyRepository.GetParentDeptId(node.ParentId);
+                    node.DeptId = deptId;
+                }
                 await _hierarchyRepository.AddNode(node);
                 return Ok();
             }
@@ -42,21 +62,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpGet("HasChildren")]
-        public async Task<IActionResult> HasChildren(int nodeId)
-        {
-            try
-            {
-                bool result = await _hierarchyRepository.HasChildren(nodeId);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("DeleteNode")]
+        [HttpGet("delete-node")]
         public async Task<IActionResult> DeleteNode(int nodeId, bool deleteChildren)
         {
             try
@@ -70,7 +76,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpPost("UpdateNode")]
+        [HttpPost("update-node")]
         public async Task<IActionResult> UpdateNode([FromBody] HierarchyNode node)
         {
             try

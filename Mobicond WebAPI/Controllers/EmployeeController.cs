@@ -5,7 +5,8 @@ using Mobicond_WebAPI.Repositories.Interfaces;
 
 namespace Mobicond_WebAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("/api/v1/[controller]")]
+    [ApiController]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -13,7 +14,7 @@ namespace Mobicond_WebAPI.Controllers
         {
             _employeeRepository = employeeRepository;
         }
-        [HttpPost("Create")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateEmployee([FromBody] Employee employee)
         {
             try
@@ -28,7 +29,7 @@ namespace Mobicond_WebAPI.Controllers
         }
 
 
-        [HttpDelete("Delete")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             try
@@ -42,7 +43,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpGet("All")]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllEmployees()
         {
             try
@@ -56,7 +57,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpGet("Get")]
+        [HttpGet("get")]
         public async Task<IActionResult> GetEmployee(int id)
         {
             try
@@ -70,7 +71,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpPost("Update")]
+        [HttpPost("update")]
         public async Task<IActionResult> UpdateEmployee([FromBody] Employee employee)
         {
             try

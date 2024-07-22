@@ -3,7 +3,7 @@ using Mobicond_WebAPI.Repositories.Interfaces.Base;
 
 namespace Mobicond_WebAPI.Repositories.Interfaces
 {
-    public interface IPositionRepository : IBaseRepository<Position>
+    public interface IJobTitleRepository : IBaseRepository<JobTitle>
     {
     }
 }

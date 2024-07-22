@@ -16,7 +16,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "INSERT INTO users (username, passwordhash, rolecode) VALUES (@Username, @PasswordHash, @RoleCode)";
+                const string query = "INSERT INTO users (username, passwordhash, rolecode) VALUES (@Username, @PasswordHash, @RoleCode)";
                 await connection.ExecuteAsync(query, new { user.Username, user.PasswordHash, user.RoleCode });
             }
         }
@@ -24,7 +24,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "SELECT * FROM users WHERE username = @Username";
+                const string query = "SELECT * FROM users WHERE username = @Username";
                 var user = await connection.QuerySingleOrDefaultAsync<User>(query, new { Username = username });
                 return user;
             }

@@ -16,8 +16,8 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var sql = "INSERT INTO employees (UserId, Surname, GivenName, MiddleName, DeptId, PosId) VALUES (@UserId, @Surname, @GivenName, @MiddleName, @DeptId, @PosId)";
-                await connection.ExecuteAsync(sql, new { UserId = entity.UserId, Surname = entity.Surname, GivenName = entity.GivenName, MiddleName = entity.MiddleName, DeptId = entity.DeptId, PosId = entity.PosId });
+                const string query = "INSERT INTO employees (UserId, Surname, GivenName, MiddleName, DeptId, JobTitleId) VALUES (@UserId, @Surname, @GivenName, @MiddleName, @DeptId, @JobTitleId)";
+                await connection.ExecuteAsync(query, new { UserId = entity.UserId, Surname = entity.Surname, GivenName = entity.GivenName, MiddleName = entity.MiddleName, DeptId = entity.DeptId, PosId = entity.JobTitleId });
             }
         }
 
@@ -25,8 +25,8 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var sql = "DELETE FROM employees WHERE id = @Id";
-                await connection.ExecuteAsync(sql, new { Id = id });
+                const string query = "DELETE FROM employees WHERE id = @Id";
+                await connection.ExecuteAsync(query, new { Id = id });
             }
         }
 
@@ -34,7 +34,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "SELECT * FROM employees WHERE id = @Id";
+                const string query = "SELECT * FROM employees WHERE id = @Id";
                 var employee = await connection.QueryFirstOrDefaultAsync<Employee>(query, new { Id = id });
                 return employee;
             }
@@ -44,7 +44,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "SELECT * FROM employees";
+                const string query = "SELECT * FROM employees";
                 var employees = await connection.QueryAsync<Employee>(query);
                 return employees;
             }
@@ -52,10 +52,9 @@ namespace Mobicond_WebAPI.Repositories.Implementations
 
         public async Task Update(Employee entity)
         {
+            using (var connection = _dbContext.CreateConnection())
             {
-                using (var connection = _dbContext.CreateConnection())
-                {
-                    var query = @"
+                const string query = @"
                             UPDATE employees 
                             SET 
                                 UserId = @UserId, 
@@ -63,10 +62,10 @@ namespace Mobicond_WebAPI.Repositories.Implementations
                                 GivenName = @GivenName, 
                                 MiddleName = @MiddleName, 
                                 DeptId = @DeptId,
-                                PosId = @PosId
+                                JobTitleId = @JobTitleId
                             WHERE Id = @Id";
-                    await connection.ExecuteAsync(query, new { UserId = entity.UserId, Surname = entity.Surname, GivenName = entity.GivenName, MiddleName = entity.MiddleName, DeptId = entity.DeptId, PosId = entity.PosId });
-                }
+                await connection.ExecuteAsync(query, new { UserId = entity.UserId, Surname = entity.Surname, GivenName = entity.GivenName, MiddleName = entity.MiddleName, DeptId = entity.DeptId, JobTitleId = entity.JobTitleId });
+
             }
         }
     }

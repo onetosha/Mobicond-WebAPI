@@ -11,6 +11,6 @@ namespace Mobicond_WebAPI.Models
         public string MiddleName { get; set; }
         public int UserId { get; set; }
         public int DeptId { get; set; }
-        public int PosId { get; set; }
+        public int JobTitleId { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "INSERT INTO departments (name, orgid) VALUES (@Name, @OrgId)";
+                const string query = "INSERT INTO departments (name, orgid) VALUES (@Name, @OrgId)";
                 await connection.ExecuteAsync(query, new { entity.Name, entity.OrgId });
             }
         }
@@ -25,7 +25,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "DELETE FROM departments WHERE id = @Id";
+                const string query = "DELETE FROM departments WHERE id = @Id";
                 await connection.ExecuteAsync(query, new { Id = id });
             }
         }
@@ -34,7 +34,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "SELECT * FROM departments WHERE id = @Id";
+                const string query = "SELECT * FROM departments WHERE id = @Id";
                 var department = await connection.QueryFirstOrDefaultAsync<Department>(query, new { Id = id });
                 return department;
             }
@@ -44,7 +44,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "SELECT * FROM departments";
+                const string query = "SELECT * FROM departments";
                 var departments = await connection.QueryAsync<Department>(query);
                 return departments;
             }
@@ -54,7 +54,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = @"
+                const string query = @"
                             UPDATE departments 
                             SET 
                                 Name = @Name,

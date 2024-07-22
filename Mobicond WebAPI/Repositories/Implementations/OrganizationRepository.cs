@@ -16,7 +16,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "INSERT INTO organizations (name) VALUES (@Name)";
+                const string query = "INSERT INTO organizations (name) VALUES (@Name)";
                 await connection.ExecuteAsync(query, new { entity.Name });
             }
         }
@@ -25,7 +25,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "DELETE FROM organizations WHERE id = @Id";
+                const string query = "DELETE FROM organizations WHERE id = @Id";
                 await connection.ExecuteAsync(query, new { Id = id });
             }
         }
@@ -34,7 +34,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "SELECT * FROM organizations WHERE id = @Id";
+                const string query = "SELECT * FROM organizations WHERE id = @Id";
                 var organization = await connection.QueryFirstOrDefaultAsync<Organization>(query, new { Id = id });
                 return organization;
             }
@@ -44,7 +44,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "SELECT * FROM organizations";
+                const string query = "SELECT * FROM organizations";
                 var organizations = await connection.QueryAsync<Organization>(query);
                 return organizations;
             }
@@ -54,7 +54,7 @@ namespace Mobicond_WebAPI.Repositories.Implementations
         {
             using (var connection = _dbContext.CreateConnection())
             {
-                var query = "UPDATE organizations SET Name = @Name WHERE Id = @Id";
+                const string query = "UPDATE organizations SET Name = @Name WHERE Id = @Id";
                 await connection.ExecuteAsync(query, new { Name = entity.Name, Id = entity.Id });
             }
         }

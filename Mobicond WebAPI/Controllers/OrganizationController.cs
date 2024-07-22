@@ -5,8 +5,9 @@ using Mobicond_WebAPI.Repositories.Interfaces;
 
 namespace Mobicond_WebAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("/api/v1/[controller]")]
     [Authorize(Roles = "SU")]
+    [ApiController]
     public class OrganizationController : Controller
     {
         private readonly IDepartmentRepository _departmentRepository;
@@ -18,7 +19,7 @@ namespace Mobicond_WebAPI.Controllers
             _organizationRepository = organizationRepository;
         }
         ///////////////////////////////////////////////////////////////////////ORGANIZATION
-        [HttpPost("CreateOrganization")]
+        [HttpPost("create-organization")]
         public async Task<IActionResult> CreateOrganization([FromBody] Organization organization)
         {
             try
@@ -32,7 +33,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpDelete("DeleteOrganization")]
+        [HttpDelete("delete-organization")]
         public async Task<IActionResult> DeleteOrganization(int id)
         {
             try
@@ -46,7 +47,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpGet("AllOrganizations")]
+        [HttpGet("all-organizations")]
         public async Task<IActionResult> GetAllOrganizations()
         {
             try
@@ -60,7 +61,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpGet("GetOrganization")]
+        [HttpGet("get-organization")]
         public async Task<IActionResult> GetOrganization(int id)
         {
             try
@@ -74,7 +75,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpPost("UpdateOrganization")]
+        [HttpPost("update-organization")]
         public async Task<IActionResult> UpdateOrganization([FromBody] Organization organization)
         {
             try
@@ -89,7 +90,7 @@ namespace Mobicond_WebAPI.Controllers
         }
 
         ///////////////////////////////////////////////////////////////////////DEPARTMENT
-        [HttpPost("CreateDepartment")]
+        [HttpPost("create-department")]
         public async Task<IActionResult> CreateDepartment([FromBody] Department department)
         {
             try
@@ -103,7 +104,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpDelete("DeleteDepartment")]
+        [HttpDelete("delete-department")]
         public async Task<IActionResult> DeleteDepartment(int id)
         {
             try
@@ -117,7 +118,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpGet("AllDepartments")]
+        [HttpGet("all-departments")]
         public async Task<IActionResult> GetAllDepartments()
         {
             try
@@ -131,7 +132,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpGet("GetDepartment")]
+        [HttpGet("get-department")]
         public async Task<IActionResult> GetDepartment(int id)
         {
             try
@@ -145,7 +146,7 @@ namespace Mobicond_WebAPI.Controllers
             }
         }
 
-        [HttpPost("UpdateDepartment")]
+        [HttpPost("update-department")]
         public async Task<IActionResult> UpdateDepartment([FromBody] Department department)
         {
             try

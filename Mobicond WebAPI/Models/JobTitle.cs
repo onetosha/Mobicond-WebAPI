@@ -2,7 +2,7 @@
 
 namespace Mobicond_WebAPI.Models
 {
-    public class Position
+    public class JobTitle
     {
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int Id { get; set; }
